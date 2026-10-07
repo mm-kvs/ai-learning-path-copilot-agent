@@ -473,6 +473,83 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Function to render a single activity card
+  // Build a row of buttons that let users share an activity with friends
+  function createShareButtons(activityName, schedule) {
+    const pageUrl = window.location.href.split("#")[0];
+    const shareText = `Check out "${activityName}" at Mergington High School! Schedule: ${schedule}`;
+    const encodedText = encodeURIComponent(shareText);
+    const encodedUrl = encodeURIComponent(pageUrl);
+
+    // Each social site has its own sharing web address
+    const shareOptions = [
+      {
+        label: "Facebook",
+        icon: "f",
+        className: "share-facebook",
+        url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`,
+      },
+      {
+        label: "X (Twitter)",
+        icon: "𝕏",
+        className: "share-x",
+        url: `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
+      },
+      {
+        label: "WhatsApp",
+        icon: "💬",
+        className: "share-whatsapp",
+        url: `https://wa.me/?text=${encodeURIComponent(shareText + " " + pageUrl)}`,
+      },
+      {
+        label: "Email",
+        icon: "✉",
+        className: "share-email",
+        url: `mailto:?subject=${encodeURIComponent(activityName)}&body=${encodeURIComponent(shareText + "\n\n" + pageUrl)}`,
+      },
+    ];
+
+    const container = document.createElement("div");
+    container.className = "share-buttons";
+
+    const title = document.createElement("span");
+    title.className = "share-title";
+    title.textContent = "Share:";
+    container.appendChild(title);
+
+    shareOptions.forEach((option) => {
+      const link = document.createElement("a");
+      link.className = `share-button ${option.className}`;
+      link.href = option.url;
+      link.textContent = option.icon;
+      link.title = `Share on ${option.label}`;
+      link.setAttribute("aria-label", `Share ${activityName} on ${option.label}`);
+      if (!option.url.startsWith("mailto:")) {
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      }
+      container.appendChild(link);
+    });
+
+    // "Copy link" button for sharing anywhere else
+    const copyButton = document.createElement("button");
+    copyButton.type = "button";
+    copyButton.className = "share-button share-copy";
+    copyButton.textContent = "🔗";
+    copyButton.title = "Copy link";
+    copyButton.setAttribute("aria-label", `Copy link to ${activityName}`);
+    copyButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(`${shareText} ${pageUrl}`);
+        showMessage("Link copied! Paste it to share with your friends.", "success");
+      } catch (error) {
+        showMessage("Could not copy the link. Please copy the page address instead.", "error");
+      }
+    });
+    container.appendChild(copyButton);
+
+    return container;
+  }
+
   function renderActivityCard(name, details) {
     const activityCard = document.createElement("div");
     activityCard.className = "activity-card";
@@ -570,6 +647,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       </div>
     `;
+
+    // Add social sharing buttons
+    activityCard.appendChild(createShareButtons(name, formattedSchedule));
 
     // Add click handlers for delete buttons
     const deleteButtons = activityCard.querySelectorAll(".delete-participant");
