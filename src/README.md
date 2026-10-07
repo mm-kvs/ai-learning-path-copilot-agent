@@ -14,13 +14,13 @@ At the bottom of every activity card there is a **Share** row with small round b
 
 | Button | What it does |
 | ------ | ------------ |
-| **f** (blue) | Opens Facebook so you can post about the activity |
+| **f** (blue) | Opens Facebook so you can post a link to the activities page |
 | **𝕏** (black) | Opens X (Twitter) with a ready-made message |
 | **💬** (green) | Opens WhatsApp so you can send the activity to a friend |
-| **✉** (purple) | Opens your email program with a pre-written email |
+| **✉** | Opens your email program with a pre-written email |
 | **🔗** (grey) | Copies a message and the website link so you can paste it anywhere |
 
-No login is needed to share. The website does not send any information to these sites by itself - it only opens them in a new tab when you click a button.
+No login is needed to share. The website does not send any information to these sites by itself - the Facebook, X, and WhatsApp buttons simply open that site in a new tab when you click them.
 
 ## Development Guide
 

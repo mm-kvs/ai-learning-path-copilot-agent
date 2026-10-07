@@ -472,7 +472,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Function to render a single activity card
   // Build a row of buttons that let users share an activity with friends
   function createShareButtons(activityName, schedule) {
     const pageUrl = window.location.href.split("#")[0];
@@ -486,7 +485,7 @@ document.addEventListener("DOMContentLoaded", () => {
         label: "Facebook",
         icon: "f",
         className: "share-facebook",
-        url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`,
+        url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
       },
       {
         label: "X (Twitter)",
@@ -550,6 +549,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return container;
   }
 
+  // Function to render a single activity card
   function renderActivityCard(name, details) {
     const activityCard = document.createElement("div");
     activityCard.className = "activity-card";
